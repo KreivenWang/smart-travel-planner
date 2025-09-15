@@ -1,0 +1,43 @@
+<div className="flex flex-col h-screen">
+  <div className="flex-1 overflow-y-auto px-4 py-6 space-y-6">
+    <!-- chat message -->
+    @for (msg of messages; track msg) {
+    <app-chat-bubble [message]="msg" [isStreaming]="msg.id === 'streaming'" />
+    }
+
+    <!-- streaming message -->
+    @if(streamingMessage) {
+    <app-chat-bubble [message]="streamingMessage" [isStreaming]="true" />
+    }
+
+    <!-- <div ref={messagesEndRef} /> -->
+  </div>
+  <!--  Input Form  -->
+  <div className="bg-white border-t px-4 py-4">
+    <form onSubmit="{handleSubmit}" className="flex space-x-3">
+      <div className="flex-1 relative">
+        <textarea
+          pTextarea
+          [(ngModel)]="inputValue"
+          (keyup.enter)="handleSubmitAsync($event)"
+          placeholder="输入您的旅行需求，例如：和家人去日本，预算2万，7天，想去东京看樱花"
+          class="w-full resize-none rounded-xl border border-gray-300 px-4 py-3 pr-12 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200 disabled:opacity-50"
+          rows="1"
+          [disabled]="isGenerating"
+          style="min-height: 48px; max-height: 120px"
+        ></textarea>
+      </div>
+      <button
+        type="submit"
+        [disabled]="!inputValue.trim() || isGenerating"
+        className="flex items-center justify-center w-12 h-12 bg-blue-600 text-white rounded-xl hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+      >
+        @if(isGenerating){
+        <i class="pi pi-spin pi-spinner" style="font-size: 2rem"></i>
+        } @else {
+        <i class="pi pi-send"></i>
+        }
+      </button>
+    </form>
+  </div>
+</div>

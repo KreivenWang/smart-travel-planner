@@ -1,0 +1,17 @@
+<div className="px-4 py-4 border-t bg-white">
+  <div className="flex items-center space-x-2 mb-3">
+    <span className="text-sm text-gray-600">快速开始：</span>
+  </div>
+  <div className="flex flex-wrap gap-2">
+    @for(quickStarter of quickStarters; track quickStarter) {
+    <button
+      pButton
+      type="button"
+      (click)="handleQuickStart(quickStarter)"
+      className="text-xs px-3 py-2 bg-primary-50 text-blue-700 rounded-full hover:bg-primary-100 transition-colors"
+    >
+      {{ quickStarter }}
+    </button>
+    }
+  </div>
+</div>

@@ -1,13 +1,14 @@
-import { TextareaModule } from 'primeng/textarea';
 import { Component } from '@angular/core';
-import { ChatMessage, chatQuickStarters } from '../../models/chat';
-import { ChatBubble } from '../chat-bubble/chat-bubble';
-import { generateTravelPlan, simulateStreamingResponse } from '../../models/mock-plan-generator';
 import { FormsModule } from '@angular/forms';
+import { TextareaModule } from 'primeng/textarea';
+import { ChatMessage, chatQuickStarters } from '../../models/chat';
+import { generateTravelPlan, simulateStreamingResponse } from '../../models/mock-plan-generator';
+import { ChatBubble } from '../chat-bubble/chat-bubble';
+import { QuickStart } from '../quick-start/quick-start';
 
 @Component({
   selector: 'app-chat',
-  imports: [ChatBubble,FormsModule, TextareaModule],
+  imports: [ChatBubble, QuickStart, FormsModule, TextareaModule],
   templateUrl: './chat.html',
   styleUrl: './chat.css',
 })
@@ -23,8 +24,12 @@ export class Chat {
   inputValue = '';
   isGenerating = false;
 
-  async handleSubmitAsync(e: Event) {
-    e.preventDefault();
+  async handleQuickStart(text: string) {
+    this.inputValue = text;
+    await this.handleSubmitAsync();
+  }
+
+  async handleSubmitAsync() {
     if (!this.inputValue.trim() || this.isGenerating) return;
 
     const userMessage: ChatMessage = {
